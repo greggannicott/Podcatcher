@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
-#gem 'therubyracer' # I believe this is required to run on Ubuntu due to a lack of a Javascript runtime env.
+#gem 'therubyracer' # I believe this is required to run on Ubuntu due to a lack of a Javascript runtime env..
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
