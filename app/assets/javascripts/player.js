@@ -13,14 +13,14 @@ $(document).ready(function() {
     player.currentTime = previous_current_time;
   });
 
-
 });
 
 // Note where in the podcast we are every x seconds with an ajax call
 function noteCurrentTime() {
+  episode_id = $("#player").data("episode-id");
   $.ajax({
     type: 'put',
-    url: '/episodes/1/',
+    url: '/episodes/' + episode_id + '/',
     data: 'current_time='+player.currentTime
   });
 }
