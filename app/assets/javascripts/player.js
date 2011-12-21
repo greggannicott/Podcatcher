@@ -4,7 +4,7 @@ $(document).ready(function() {
 
   // Check for current time every 2 seconds
   //setInterval("noteCurrentTime()", 22000);
-  setInterval("noteCurrentTime()", 2000);
+  //setInterval("noteCurrentTime()", 2000);
 
   // Set the audio to a certain point when the audio element has loaded
   $("#player").bind('canplay', function() {
@@ -12,6 +12,17 @@ $(document).ready(function() {
     previous_current_time = $("#player").data("previous-current-time");
     player.currentTime = previous_current_time;
   });
+
+  // Note the current time when the user presses pause
+  $("#player").bind('pause', function() {
+    noteCurrentTime();
+  });
+  
+
+  // Capture the currentTime if the user closes the window
+//  $(window).bind('beforeunload', function() {
+//    noteCurrentTime();
+//  });
 
 });
 
