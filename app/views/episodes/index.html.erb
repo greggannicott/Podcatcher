@@ -1,5 +1,5 @@
 <ul>
   <% @episodes.each do |e| %>
-    <li><%= link_to e.url, e %></li>
+    <li><%= link_to e.url, e %> (<%= e.current_time.nil? ? 0 : number_with_precision(e.current_time) %>)</li>
   <% end %>
 </ul>

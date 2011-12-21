@@ -4,7 +4,7 @@ $(document).ready(function() {
 
   // Check for current time every 2 seconds
   //setInterval("noteCurrentTime()", 22000);
-  //setInterval("noteCurrentTime()", 2000);
+  setInterval("noteCurrentTime()", 2000);
 
   // Set the audio to a certain point when the audio element has loaded
   $("#player").bind('canplay', function() {
