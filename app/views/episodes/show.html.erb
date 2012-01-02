@@ -1,1 +1,5 @@
-<audio src="<%= @episode.url %>" controls preload="auto" autobuffer id="player" data-episode-id="<%= @episode.id %>" data-previous-current-time="<%= @episode.current_time %>"></audio>
+<!--<audio src="<%= @episode.url %>" controls preload="auto" autobuffer id="player" data-episode-id="<%= @episode.id %>" data-previous-current-time="<%= @episode.current_time %>"></audio>-->
+
+<video width="320" height="240" controls="controls" id="player" data-episode-id="<%= @episode.id %>" data-previous-current-time="<%= @episode.current_time %>">
+  <source src="<%= @episode.url %>" type="video/mp4"/>
+</video>

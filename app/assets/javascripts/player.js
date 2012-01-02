@@ -1,3 +1,5 @@
+var can_note = false;
+
 $(document).ready(function() {
 
   var player = $("#player").get(0);
@@ -10,7 +12,14 @@ $(document).ready(function() {
   $("#player").bind('canplay', function() {
     // Determine how far into the podcast the user is
     previous_current_time = $("#player").data("previous-current-time");
+    seekable = player.seekable.end();
     player.currentTime = previous_current_time;
+    // Note that it's now safe to note the current play time
+    // We wouldn't want to do it before the 'can_play' event as we'd be noting
+    // 0 seconds and over-writing a previous value.
+    can_note = true;
+    //alert(previous_current_time);
+    //noteCurrentTime();
   });
 
   // Note the current time when the user presses pause
@@ -28,12 +37,15 @@ $(document).ready(function() {
 
 // Note where in the podcast we are every x seconds with an ajax call
 function noteCurrentTime() {
-  episode_id = $("#player").data("episode-id");
-  $.ajax({
-    type: 'put',
-    url: '/episodes/' + episode_id + '/',
-    data: 'current_time='+player.currentTime
-  });
+  // Check whether the video 'can play'. If it can, note the current time.
+  if (can_note) {
+    episode_id = $("#player").data("episode-id");
+    $.ajax({
+      type: 'put',
+      url: '/episodes/' + episode_id + '/',
+      data: 'current_time='+player.currentTime
+    });
+  }
 }
 
 
