@@ -1,12 +1,12 @@
 var can_note = false;
+var player = null;
 
 $(document).ready(function() {
 
-  var player = $("#player").get(0);
 
   // Check for current time every 2 seconds
   //setInterval("noteCurrentTime()", 22000);
-  //setInterval("noteCurrentTime()", 2000);
+  setInterval("noteCurrentTime()", 2000);
 
   // Set the audio to a certain point when the audio element has loaded
   //$("#player").bind('canplay', function() {
@@ -30,14 +30,17 @@ $(document).ready(function() {
       $("#jquery_jplayer_1").jPlayer({
         ready: function () {
           $(this).jPlayer("setMedia", {
-            m4a: "http://www.jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
-            oga: "http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
+            mp3: $("#jquery_jplayer_1").data("file-url") 
           });
+          $(this).jPlayer("play", $("#jquery_jplayer_1").data("previous-current-time"));
+          player = $("#jquery_jplayer_1").get(0);
+          can_note = true;
         },
         swfPath: "/assets",
-        supplied: "m4a, oga"
+        supplied: "mp3"
       });
 
+      // Automatically play the file
   // Capture the currentTime if the user closes the window
 //  $(window).bind('beforeunload', function() {
 //    noteCurrentTime();
@@ -49,11 +52,11 @@ $(document).ready(function() {
 function noteCurrentTime() {
   // Check whether the video 'can play'. If it can, note the current time.
   if (can_note) {
-    episode_id = $("#player").data("episode-id");
+    episode_id = $("#jquery_jplayer_1").data("episode-id");
     $.ajax({
       type: 'put',
       url: '/episodes/' + episode_id + '/',
-      data: 'current_time='+player.currentTime
+      data: 'current_time=' + $("#jquery_jplayer_1").data("jPlayer").status.currentTime
     });
   }
 }
