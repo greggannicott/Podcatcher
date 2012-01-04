@@ -32,9 +32,10 @@ $(document).ready(function() {
           $(this).jPlayer("setMedia", {
             mp3: $("#jquery_jplayer_1").data("file-url") 
           });
-          $(this).jPlayer("play", $("#jquery_jplayer_1").data("previous-current-time"));
-          player = $("#jquery_jplayer_1").get(0);
-          can_note = true;
+        },
+        canplaythrough: function () {
+                   $(this).jPlayer("play", 30); // start 30 seconds in...
+                   can_note = true;
         },
         swfPath: "/assets",
         supplied: "mp3"
@@ -52,12 +53,15 @@ $(document).ready(function() {
 function noteCurrentTime() {
   // Check whether the video 'can play'. If it can, note the current time.
   if (can_note) {
-    episode_id = $("#jquery_jplayer_1").data("episode-id");
-    $.ajax({
-      type: 'put',
-      url: '/episodes/' + episode_id + '/',
-      data: 'current_time=' + $("#jquery_jplayer_1").data("jPlayer").status.currentTime
-    });
+    // Only update if we're higher than 10 seconds into the podcast
+    if ($("#jquery_jplayer_1").data("jPlayer").status.currentTime > 10) {
+      episode_id = $("#jquery_jplayer_1").data("episode-id");
+      $.ajax({
+        type: 'put',
+        url: '/episodes/' + episode_id + '/',
+        data: 'current_time=' + $("#jquery_jplayer_1").data("jPlayer").status.currentTime
+      });
+    }
   }
 }
 
